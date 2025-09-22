@@ -24,6 +24,6 @@ I’ve also prepared detailed **documentation** with screenshots, challenges I f
 
 ---
 
-✨ Thanks for reading & happy coding!  
+✨ Thanks for reading & happy coding!!  
 
 **— Omar Ashraf**
