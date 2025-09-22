@@ -1,50 +1,29 @@
-# Team Availability – Hands-on Task
+# 🚀 CI/CD Project with Jenkins, Docker, and GitHub Webhook  
 
-Hello Konecta team !  
-Welcome to the first Hands-on experience task **"Team Availability"**.  
-This is **Omar Ashraf** and here's what I did in this task:
-
----
-
-### 📌 What was done in this project?
-
-1. **Project Setup**  
-   - Initialized a Node.js project with Express server.  
-   - Configured project dependencies (`express`) and dev tools (`eslint`, `prettier`, `jest`, `supertest`).  
-
-2. **Code Quality & Formatting**  
-   - Added ESLint and Prettier for code consistency and clean formatting.  
-   - Automated checks inside the CI pipeline.  
-
-3. **Testing**  
-   - Implemented Jest + Supertest for unit/integration testing.  
-   - Created a `tests/` folder to validate API endpoints (e.g., `GET /`, `POST /save-history`).  
-   - Tests ensure any new changes don’t break existing functionality.  
-
-4. **CI/CD Pipeline**  
-   - Wrote a `ci.sh` script that:  
-     - Runs Prettier & ESLint.  
-     - Installs dependencies.  
-     - Executes all tests.  
-     - Builds a Docker image.  
-     - Runs the app with Docker Compose.  
-
-5. **Containerization**  
-   - Created a Dockerfile and docker-compose.yml to containerize the app.  
-   - Used Node.js 20 Alpine image for lightweight performance.  
+Hello everyone! 👋  
+This is **Omar Ashraf** and welcome to my first complete **CI/CD Project**! 🎉  
 
 ---
 
-### 📂 Documentation
-You can find **detailed explanation and screenshots** inside the folder:  
-`Task Documentation/`
-
-- `Task_Documentation.pdf` → includes full explanation with colors and screenshots.  
-- `Task_Documentation.md` → contains the same explanation in Markdown format.  
-
-Hopefully this makes the setup and steps easier to follow 🚀  
+## 🔧 What I did in this project
+- 🖥️ Built a **CI/CD pipeline locally** using Bash scripting.  
+- 🐳 **Dockerized** the application.  
+- ⚙️ Ran the app and its dependencies using **Docker Compose**.  
+- ✅ Automated **code linting** and **testing**.  
+- 🔗 Integrated **Jenkins with GitHub** using **webhooks** → so with every push, the pipeline runs automatically!  
 
 ---
 
-Best regards,  
-✨ **Omar Ashraf** ✨
+## 🙌 My Journey
+I’m really happy to share this with you!  
+When I started my **DevOps internship**, I had no background except for **Cloud** ☁️.  
+Today, I was able to build a **full CI/CD pipeline from zero**!  
+
+I hope everything is clear.  
+I’ve also prepared detailed **documentation** with screenshots, challenges I faced, and how I solved them.  
+
+---
+
+✨ Thanks for reading & happy coding!  
+
+**— Omar Ashraf**
