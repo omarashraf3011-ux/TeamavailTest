@@ -1,45 +1,92 @@
+// server.js
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const bodyParser = require('body-parser');
+const { pool, waitForDb } = require('./db');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(bodyParser.json());
-
-// Serve static frontend
 app.use(express.static(path.join(__dirname, 'public')));
-
-// Serve input JSON files
 app.use('/input', express.static(path.join(__dirname, 'input')));
-
-// Serve output folder (for history.json)
 app.use('/output', express.static(path.join(__dirname, 'output')));
 
-// API to save history data
-app.post('/save-history', (req, res) => {
+// Helper: write history file
+function writeHistoryFile(payload) {
   const historyPath = path.join(__dirname, 'output', 'history.json');
-  const json = JSON.stringify(req.body, null, 2);
-
-  fs.writeFile(historyPath, json, 'utf8', (err) => {
-    if (err) {
-      console.error('Error saving history.json:', err);
-      res.status(500).send('Failed to save history.json');
-    } else {
-      console.log('History successfully saved.');
-      res.status(200).send('Saved');
-    }
-  });
-});
-
-// Run server only if file is executed directly
-if (require.main === module) {
-  app.listen(PORT, () => {
-    console.log(`Server running at http://localhost:${PORT}`);
-  });
+  const json = JSON.stringify(payload, null, 2);
+  fs.writeFileSync(historyPath, json, 'utf8');
+  console.log('History saved to file (output/history.json)');
 }
 
-// Export app for testing
+// API to save history
+app.post('/save-history', async (req, res) => {
+  const payload = req.body;
+  let savedToDb = false;
+
+  try {
+    const q = 'INSERT INTO history (payload) VALUES ($1::jsonb) RETURNING id, created_at';
+    const values = [JSON.stringify(payload)];
+    const result = await pool.query(q, values);
+    savedToDb = true;
+    console.log('History saved to DB, id=', result.rows[0].id);
+  } catch (err) {
+    console.error('DB insert failed (will fallback to file):', err.message || err);
+  }
+
+  try {
+    writeHistoryFile(payload);
+  } catch (fsErr) {
+    console.error('Error saving history.json:', fsErr);
+    if (!savedToDb) {
+      return res.status(500).send('Failed to save history');
+    }
+  }
+
+  return res.status(200).json({ ok: true, savedToDb });
+});
+
+// Default route
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+// Start server with DB wait + graceful shutdown
+async function startServer() {
+  try {
+    await waitForDb();
+    const server = app.listen(PORT, () => {
+      console.log(`Server listening on port ${PORT}`);
+    });
+
+    const graceful = async () => {
+      console.log('Shutting down server...');
+      server.close(async () => {
+        try {
+          await pool.end();
+          console.log('DB pool closed. Exiting.');
+          process.exit(0);
+        } catch (err) {
+          console.error('Error during pool shutdown', err);
+          process.exit(1);
+        }
+      });
+    };
+
+    process.on('SIGTERM', graceful);
+    process.on('SIGINT', graceful);
+
+  } catch (err) {
+    console.error('Failed to start server (DB not ready):', err);
+    process.exit(1);
+  }
+}
+
+if (require.main === module) {
+  startServer();
+}
+
 module.exports = app;
