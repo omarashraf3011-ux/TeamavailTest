@@ -3,6 +3,8 @@ pipeline {
 
     environment {
         NODE_ENV = 'development'
+        DOCKERHUB_CREDENTIALS = credentials('docker-hub') 
+        IMAGE_NAME = "omarashraf3011/teamavail-app"
     }
 
     stages {
@@ -10,29 +12,44 @@ pipeline {
             steps {
                 echo "=== Starting pipeline inside workspace ==="
 
-                // تثبيت الاعتماديات
                 echo "=== Installing dependencies ==="
                 sh 'npm install'
 
-                // تشغيل Prettier (formatting)
                 echo "=== Running Prettier (formatting) ==="
                 sh 'npx prettier --write .'
 
-                // تشغيل ESLint (code check)
                 echo "=== Running ESLint (code check) ==="
                 sh 'npx eslint .'
 
-                // تشغيل الاختبارات
                 echo "=== Running Tests ==="
                 sh 'npm test'
 
-                // بناء Docker image
                 echo "=== Building Docker image ==="
-                sh 'docker build -t teamavail-app .'
+                sh "docker build -t $IMAGE_NAME:latest ."
+            }
+        }
 
-                // تشغيل Docker Compose
-                echo "=== Starting Docker Compose ==="
-                sh 'docker-compose up -d'
+        stage('Login to Docker Hub') {
+            steps {
+                echo "=== Logging in to Docker Hub ==="
+                sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
+            }
+        }
+
+        stage('Push Docker Image') {
+            steps {
+                echo "=== Pushing image to Docker Hub ==="
+                sh "docker push $IMAGE_NAME:latest"
+            }
+        }
+
+        stage('Deploy with Docker Compose') {
+            steps {
+                echo "=== Pulling latest image from Docker Hub ==="
+                sh 'docker-compose pull'
+
+                echo "=== Starting Docker Compose with latest image ==="
+                sh 'docker-compose up -d --force-recreate'
             }
         }
     }
