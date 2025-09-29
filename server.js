@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const { pool, waitForDb } = require('./db');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 
 // Middleware
 app.use(bodyParser.json());
@@ -54,35 +54,35 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// Start server with DB wait + graceful shutdown
-async function startServer() {
-  try {
-    await waitForDb();
-    const server = app.listen(PORT, () => {
-      console.log(`Server listening on port ${PORT}`);
+// Start server (open port immediately, check DB in background)
+function startServer() {
+  const server = app.listen(PORT, () => {
+    console.log(`🚀 Server listening on port ${PORT}`);
+  });
+
+  // Try to connect to DB in background
+  waitForDb()
+    .then(() => console.log('✅ Connected to Postgres'))
+    .catch((err) => {
+      console.error('⚠️ DB not ready after retries:', err.message);
     });
 
-    const graceful = async () => {
-      console.log('Shutting down server...');
-      server.close(async () => {
-        try {
-          await pool.end();
-          console.log('DB pool closed. Exiting.');
-          process.exit(0);
-        } catch (err) {
-          console.error('Error during pool shutdown', err);
-          process.exit(1);
-        }
-      });
-    };
+  const graceful = async () => {
+    console.log('Shutting down server...');
+    server.close(async () => {
+      try {
+        await pool.end();
+        console.log('DB pool closed. Exiting.');
+        process.exit(0);
+      } catch (err) {
+        console.error('Error during pool shutdown', err);
+        process.exit(1);
+      }
+    });
+  };
 
-    process.on('SIGTERM', graceful);
-    process.on('SIGINT', graceful);
-
-  } catch (err) {
-    console.error('Failed to start server (DB not ready):', err);
-    process.exit(1);
-  }
+  process.on('SIGTERM', graceful);
+  process.on('SIGINT', graceful);
 }
 
 if (require.main === module) {
