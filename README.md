@@ -1,6 +1,7 @@
 # 🚀 CI/CD Project — Team Availability App
 
 **Hello all!**
+
 Welcome to my **CI/CD project** 👋
 
 This project demonstrates how to build and run a complete **CI/CD pipeline** for a real-world application: the **Team Availability App**.
@@ -51,6 +52,7 @@ It reflects my hands-on experience in integrating development, testing, automati
 ---
 📬 Contact
 LinkedIn: [Omar Ashraf](https://www.linkedin.com/in/omar-ashraf-a98b3a213/)
+
 Email: omar.ashraf3011@gmail.com
 
 ✍️ *Omar Ashraf*
