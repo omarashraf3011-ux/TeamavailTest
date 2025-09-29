@@ -49,5 +49,8 @@ This project was built during my internship as a way to simulate real-world DevO
 It reflects my hands-on experience in integrating development, testing, automation, and cloud deployment into one streamlined pipeline.
 
 ---
+📬 Contact
+LinkedIn: [Omar Ashraf](https://www.linkedin.com/in/omar-ashraf-a98b3a213/)
+Email: omar.ashraf3011@gmail.com
 
 ✍️ *Omar Ashraf*
