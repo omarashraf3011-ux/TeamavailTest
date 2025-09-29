@@ -1,29 +1,53 @@
-# 🚀 CI/CD Project with Jenkins, Docker, and GitHub Webhook  
+# 🚀 CI/CD Project — Team Availability App
 
-Hello everyone! 👋  
-This is **Omar Ashraf** and welcome to my first complete **CI/CD Project**! 🎉  
+**Dears!**
+Welcome to my **CI/CD project** 👋
 
----
-
-## 🔧 What I did in this project
-- 🖥️ Built a **CI/CD pipeline locally** using Bash scripting.  
-- 🐳 **Dockerized** the application.  
-- ⚙️ Ran the app and its dependencies using **Docker Compose**.  
-- ✅ Automated **code linting** and **testing**.  
-- 🔗 Integrated **Jenkins with GitHub** using **webhooks** → so with every push, the pipeline runs automatically!  
+This project demonstrates how to build and run a complete **CI/CD pipeline** for a real-world application: the **Team Availability App**.
+The goal is to automate the application lifecycle — from code quality checks, to building and containerizing, all the way to running it locally and deploying it on the cloud.
 
 ---
 
-## 🙌 My Journey
-I’m really happy to share this with you!  
-When I started my **DevOps internship**, I had no background except for **Cloud** ☁️.  
-Today, I was able to build a **full CI/CD pipeline from zero**!  
+## 🔧 What this project covers
 
-I hope everything is clear.  
-I’ve also prepared detailed **documentation** with screenshots, challenges I faced, and how I solved them.  
+* **Code Quality**: Linting & testing automation.
+* **Containerization**: Docker & Docker Compose for local environment setup.
+* **CI/CD Pipeline**: Automated build and deploy using Jenkins & GitHub integration.
+* **Webhook Trigger**: Configured Jenkins to automatically start the pipeline on each GitHub push.
+* **Cloud Deployment**: Deployed on **Google Cloud Run** with a managed **Postgres (Cloud SQL)** backend.
 
 ---
 
-✨ Thanks for reading & happy coding!
+## 📂 Documentation
 
-**— Omar Ashraf**
+For full details, challenges I faced, and how I solved them:
+👉 [Read the full Documentation (PDF)](./doc/Documentation.pdf)
+
+---
+
+## 📊 Project Diagram
+
+Below is the high-level architecture & workflow of the project:
+
+![CI/CD Diagram](./doc/images/diagram.png)
+
+---
+
+## 🛠️ Technologies Used
+
+* Git & GitHub
+* Bash Scripting
+* Docker & Docker Compose
+* Jenkins
+* Google Cloud (Cloud Run, Cloud SQL)
+
+---
+
+## ✨ About
+
+This project was built during my internship as a way to simulate real-world DevOps workflows.
+It reflects my hands-on experience in integrating development, testing, automation, and cloud deployment into one streamlined pipeline.
+
+---
+
+✍️ *Omar Ashraf*
