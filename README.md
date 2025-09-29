@@ -55,4 +55,5 @@ LinkedIn: [Omar Ashraf](https://www.linkedin.com/in/omar-ashraf-a98b3a213/)
 
 Email: omar.ashraf3011@gmail.com
 
+---
 ✍️ *Omar Ashraf*
