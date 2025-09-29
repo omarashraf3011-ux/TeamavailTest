@@ -1,6 +1,6 @@
 # 🚀 CI/CD Project — Team Availability App
 
-**Dears!**
+**Hello all!**
 Welcome to my **CI/CD project** 👋
 
 This project demonstrates how to build and run a complete **CI/CD pipeline** for a real-world application: the **Team Availability App**.
